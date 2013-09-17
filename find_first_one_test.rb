@@ -1,5 +1,6 @@
 gem 'minitest'
 require 'minitest'
+require 'minitest/autorun'
 require 'minitest/pride'
 
 class FindFirstOneTest < Minitest::Test
@@ -20,8 +21,16 @@ class FindFirstOneTest < Minitest::Test
 
     found = nil
     things.each do |thing|
-      # write code here
+      if thing.weird?
+        found = thing
+        break
+      end
     end
+
+    
+    #same as
+    #found = things.find{|thing| thing.weird?}
+
     assert_equal thing3.object_id, found.object_id
   end
 
@@ -32,7 +41,7 @@ class FindFirstOneTest < Minitest::Test
   end
 
   def test_first_pink_unicorn
-    skip
+    
     unicorn1 = Unicorn.new('white')
     unicorn2 = Unicorn.new('sparkly')
     unicorn3 = Unicorn.new('purple')
@@ -41,7 +50,10 @@ class FindFirstOneTest < Minitest::Test
 
     unicorns = [unicorn1, unicorn2, unicorn3, unicorn4, unicorn5]
 
-    # write code here
+    found = unicorns.find do |unicorn|
+      unicorn.pink?
+    end
+
 
     assert_equal unicorn4.object_id, found.object_id
   end
